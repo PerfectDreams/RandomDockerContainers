@@ -7,14 +7,20 @@ for d in */ ; do
     docker build . --file Dockerfile --tag ${image_name} --label "runnumber=${GITHUB_RUN_ID}"
     
     IMAGE_ID=ghcr.io/${GITHUB_REPO_OWNER}/${image_name}
+
     # Change all uppercase to lowercase
     IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
     # Strip git ref prefix from version
     VERSION=$(echo "$GITHUB_REF" | sed -e 's,.*/\(.*\),\1,')
+
     # Strip "v" prefix from tag name
+    # The [[ thingy requires bash!
     [[ "$GITHUB_REF" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
     # Use Docker `latest` tag convention
     [ "$VERSION" == "main" ] && VERSION=latest
+    
     echo IMAGE_ID=$IMAGE_ID
     echo VERSION=$VERSION
     docker tag ${image_name} $IMAGE_ID:$VERSION

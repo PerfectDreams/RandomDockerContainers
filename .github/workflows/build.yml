@@ -22,7 +22,7 @@ jobs:
       
     - name: Build Docker images
       run: |
-        sh build_all.sh
+        bash build_all.sh
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_ACTOR: ${{ github.actor }}
