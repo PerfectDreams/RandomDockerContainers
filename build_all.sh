@@ -14,7 +14,7 @@ for d in */ ; do
     # Strip "v" prefix from tag name
     [[ "$GITHUB_REF" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
     # Use Docker `latest` tag convention
-    [ "$VERSION" == "master" ] && VERSION=latest
+    [ "$VERSION" == "main" ] && VERSION=latest
     echo IMAGE_ID=$IMAGE_ID
     echo VERSION=$VERSION
     docker tag ${image_name} $IMAGE_ID:$VERSION
